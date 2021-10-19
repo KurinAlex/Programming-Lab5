@@ -18,9 +18,8 @@ void OutputArray(int* array, int size, const char* array_name)
 	printf("\n");
 }
 
-int* GenerateSortedArray(int size)
+void GenerateSortedArray(int* array, int size)
 {
-	int* array = calloc(size, sizeof(int));
 	for (int i = 0; i < size; i++)
 	{
 		array[i] = rand();
@@ -33,7 +32,6 @@ int* GenerateSortedArray(int size)
 		}
 		array[j] = value;
 	}
-	return array;
 }
 
 void CopyTo(int* A, int start_index_A, int end_index_A, int* B, int start_index_B)
@@ -44,11 +42,8 @@ void CopyTo(int* A, int start_index_A, int end_index_A, int* B, int start_index_
 	}
 }
 
-int* MergeInSortedArray(int* A, int size_A, int* B, int size_B)
+void MergeInSortedArray(int* A, int size_A, int* B, int size_B, int* C, int size_C)
 {
-	int size_C = size_A + size_B;
-	int* C = calloc(size_C, sizeof(int));
-
 	int it_A = 0;
 	int it_B = 0;
 	int it_C = 0;
@@ -69,8 +64,6 @@ int* MergeInSortedArray(int* A, int size_A, int* B, int size_B)
 			CopyTo(A, it_A, size_A, C, it_C);
 		}
 	}
-
-	return C;
 }
 
 int main()
@@ -83,14 +76,23 @@ int main()
 	int size_B;
 	EnterInteger(&size_B, "size of B");
 
-	int* A = GenerateSortedArray(size_A);
+	int size_C = size_A + size_B;
+
+	int* A = calloc(size_A, sizeof(int));
+	GenerateSortedArray(A, size_A);
 	OutputArray(A, size_A, "A");
 
-	int* B = GenerateSortedArray(size_B);
+	int* B = calloc(size_B, sizeof(int));
+	GenerateSortedArray(B, size_B);
 	OutputArray(B, size_B, "B");
 
-	int* C = MergeInSortedArray(A, size_A, B, size_B);
-	OutputArray(C, size_A + size_B, "C");
+	int* C = calloc(size_C, sizeof(int));
+	MergeInSortedArray(A, size_A, B, size_B, C, size_C);
+	OutputArray(C, size_C, "C");
+
+	free(A);
+	free(B);
+	free(C);
 
 	getch();
 	return 0;
