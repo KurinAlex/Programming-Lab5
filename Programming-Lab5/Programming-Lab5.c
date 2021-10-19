@@ -18,13 +18,15 @@ void OutputArray(int* array, int size, const char* array_name)
 	printf("\n");
 }
 
-void GenerateSortedArray(int* array, int size)
+void Sort(int* array, int size)
 {
-	for (int i = 0; i < size; i++)
+	int value;
+	int j;
+
+	for (int i = 1; i < size; i++)
 	{
-		array[i] = rand();
-		int value = array[i];
-		int j = i;
+		value = array[i];
+		j = i;
 		while (j > 0 && value < array[j - 1])
 		{
 			array[j] = array[j - 1];
@@ -34,36 +36,29 @@ void GenerateSortedArray(int* array, int size)
 	}
 }
 
-void CopyTo(int* A, int start_index_A, int end_index_A, int* B, int start_index_B)
+void GenerateSortedArray(int* array, int size)
 {
-	for (int it_A = start_index_A, it_B = start_index_B; it_A < end_index_A; it_A++, it_B++)
+	for (int i = 0; i < size; i++)
 	{
-		B[it_B] = A[it_A];
+		array[i] = rand();
 	}
+	Sort(array, size);
 }
 
 void MergeInSortedArray(int* A, int size_A, int* B, int size_B, int* C, int size_C)
 {
-	int it_A = 0;
-	int it_B = 0;
 	int it_C = 0;
 
-	for (; it_A < size_A && it_B < size_B; it_C++) //поки не пройдемо всі елементи одного із масивів
+	for (int it_A = 0; it_A < size_A; it_A++, it_C++)
 	{
-		C[it_C] = (A[it_A] < B[it_B]) ? A[it_A++] : B[it_B++];
+		C[it_C] = A[it_A];
+	}
+	for (int it_B = 0; it_B < size_B; it_B++, it_C++)
+	{
+		C[it_C] = B[it_B];
 	}
 
-	if (it_C != size_C) //у якомусь із масивів ще є непройдені елементи
-	{
-		if (it_A == size_A) //у масиві В ще є непройдені елементи
-		{
-			CopyTo(B, it_B, size_B, C, it_C);
-		}
-		else //у масиві А ще є непройдені елементи
-		{
-			CopyTo(A, it_A, size_A, C, it_C);
-		}
-	}
+	Sort(C, size_C);
 }
 
 int main()
