@@ -20,13 +20,10 @@ void OutputArray(int* array, int size, const char* array_name)
 
 void Sort(int* array, int size)
 {
-	int value;
-	int j;
-
 	for (int i = 1; i < size; i++)
 	{
-		value = array[i];
-		j = i;
+		int value = array[i];
+		int j = i;
 		while (j > 0 && value < array[j - 1])
 		{
 			array[j] = array[j - 1];
